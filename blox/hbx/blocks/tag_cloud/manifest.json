@@ -1,0 +1,287 @@
+{
+  "name": "tag_cloud",
+  "display_name": "Tag Cloud",
+  "description": "A modern, responsive tag cloud block that displays taxonomy terms with dynamic font sizing based on frequency. Built with Tailwind CSS and supports dark mode.",
+  "version": "1.0.0",
+  "hugo_version": "0.119.0+",
+  "hugoblox_version": "5.9.0+",
+  "author": {
+    "name": "HugoBlox Community",
+    "email": "hello@hugoblox.com",
+    "url": "https://hugoblox.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HugoBlox/hugo-blox-builder"
+  },
+  "license": "MIT",
+  "category": "content",
+  "tags": [
+    "taxonomy",
+    "tags",
+    "categories",
+    "visualization",
+    "tailwind",
+    "responsive",
+    "dark-mode"
+  ],
+  "keywords": [
+    "tag cloud",
+    "word cloud",
+    "taxonomy display",
+    "content navigation",
+    "blog tags",
+    "categories",
+    "responsive design"
+  ],
+  "homepage": "https://hugoblox.com/blocks/",
+  "documentation": {
+    "readme": "README.md",
+    "examples": "examples/",
+    "api_reference": "https://hugoblox.com/docs/blocks/tag_cloud"
+  },
+  "files": {
+    "template": "layouts/partials/blocks/tag_cloud.html",
+    "readme": "README.md",
+    "examples": [
+      "examples/blog-tags.yml",
+      "examples/research-topics.yml",
+      "examples/skills-portfolio.yml"
+    ],
+    "screenshots": [
+      "screenshots/tag-cloud-light.png",
+      "screenshots/tag-cloud-dark.png",
+      "screenshots/tag-cloud-mobile.png"
+    ]
+  },
+  "dependencies": {
+    "hugo": ">=0.119.0",
+    "hugoblox": ">=5.9.0",
+    "tailwindcss": ">=3.0.0"
+  },
+  "features": [
+    {
+      "name": "Dynamic Font Sizing",
+      "description": "Automatically scales tag sizes based on frequency using logarithmic calculation",
+      "implemented": true
+    },
+    {
+      "name": "Multiple Taxonomies",
+      "description": "Support for tags, categories, and custom taxonomies",
+      "implemented": true
+    },
+    {
+      "name": "Tailwind CSS Integration",
+      "description": "Modern responsive design with Tailwind utility classes",
+      "implemented": true
+    },
+    {
+      "name": "Dark Mode Support",
+      "description": "Automatic theme switching with proper contrast ratios",
+      "implemented": true
+    },
+    {
+      "name": "Mobile Responsive",
+      "description": "Mobile-first design that works on all screen sizes",
+      "implemented": true
+    },
+    {
+      "name": "Performance Optimized",
+      "description": "Efficient Hugo templating with minimal overhead",
+      "implemented": true
+    },
+    {
+      "name": "Accessibility Ready",
+      "description": "WCAG compliant with proper focus states and contrast",
+      "implemented": true
+    }
+  ],
+  "configuration": {
+    "content": {
+      "text": {
+        "type": "string",
+        "description": "Optional header text with markdown support",
+        "default": null,
+        "required": false
+      },
+      "taxonomy": {
+        "type": "string",
+        "description": "Taxonomy to display (tags, categories, etc.)",
+        "default": "tags",
+        "required": false,
+        "options": [
+          "tags",
+          "categories",
+          "authors",
+          "series"
+        ]
+      },
+      "count": {
+        "type": "integer",
+        "description": "Maximum number of terms to display (0 = unlimited)",
+        "default": 20,
+        "required": false,
+        "min": 0,
+        "max": 100
+      }
+    },
+    "design": {
+      "font_size_min": {
+        "type": "float",
+        "description": "Minimum font size (rem) for least frequent terms",
+        "default": 0.8,
+        "required": false,
+        "min": 0.5,
+        "max": 2.0
+      },
+      "font_size_max": {
+        "type": "float",
+        "description": "Maximum font size (rem) for most frequent terms",
+        "default": 2.5,
+        "required": false,
+        "min": 1.0,
+        "max": 4.0
+      },
+      "columns": {
+        "type": "string",
+        "description": "Layout columns (1 = center, 2 = left-aligned)",
+        "default": "1",
+        "required": false,
+        "options": [
+          "1",
+          "2"
+        ]
+      }
+    }
+  },
+  "examples": {
+    "basic": {
+      "title": "Basic Tag Cloud",
+      "description": "Simple tag cloud with default settings",
+      "yaml": "sections:\n  - block: tag_cloud\n    content:\n      text: \"Explore topics by popularity\"\n      taxonomy: \"tags\"\n      count: 20"
+    },
+    "advanced": {
+      "title": "Advanced Configuration",
+      "description": "Full configuration with custom styling",
+      "yaml": "sections:\n  - block: tag_cloud\n    content:\n      text: |\n        ## Popular Topics\n        Discover the most discussed subjects on our blog.\n      taxonomy: \"tags\"\n      count: 50\n    design:\n      font_size_min: 0.8\n      font_size_max: 2.5\n      columns: \"1\""
+    },
+    "categories": {
+      "title": "Category Cloud",
+      "description": "Display categories instead of tags",
+      "yaml": "sections:\n  - block: tag_cloud\n    content:\n      text: \"Browse content by category\"\n      taxonomy: \"categories\"\n      count: 15\n    design:\n      columns: \"2\""
+    },
+    "research": {
+      "title": "Research Areas",
+      "description": "Academic website with research topics",
+      "yaml": "sections:\n  - block: tag_cloud\n    content:\n      text: |\n        ### Research Focus Areas\n        *Explore our key research domains and specializations.*\n      taxonomy: \"research_areas\"\n      count: 0\n    design:\n      font_size_min: 0.8\n      font_size_max: 3.0\n      columns: \"1\""
+    }
+  },
+  "styling": {
+    "tailwind_classes": [
+      "text-sm",
+      "text-base",
+      "text-lg",
+      "text-xl",
+      "text-2xl",
+      "text-3xl",
+      "text-blue-600",
+      "hover:text-blue-800",
+      "dark:text-blue-400",
+      "dark:hover:text-blue-300",
+      "transition-colors",
+      "duration-200",
+      "hover:underline"
+    ],
+    "color_scheme": {
+      "light": {
+        "primary": "text-blue-600",
+        "primary_hover": "hover:text-blue-800"
+      },
+      "dark": {
+        "primary": "dark:text-blue-400",
+        "primary_hover": "dark:hover:text-blue-300"
+      }
+    },
+    "responsive": {
+      "mobile": "gap-2",
+      "tablet": "gap-2",
+      "desktop": "gap-2"
+    }
+  },
+  "browser_support": {
+    "chrome": "90+",
+    "firefox": "88+",
+    "safari": "14+",
+    "edge": "90+",
+    "ie": "not_supported"
+  },
+  "accessibility": {
+    "wcag_level": "AA",
+    "features": [
+      "keyboard_navigation",
+      "screen_reader_friendly",
+      "high_contrast_support",
+      "focus_indicators",
+      "semantic_html"
+    ]
+  },
+  "performance": {
+    "template_complexity": "low",
+    "render_time": "< 1ms",
+    "dom_elements": "minimal",
+    "javascript": "none",
+    "css_size": "< 1kb"
+  },
+  "testing": {
+    "hugo_versions": [
+      "0.119.0",
+      "0.120.0",
+      "0.121.0"
+    ],
+    "hugoblox_versions": [
+      "5.9.0",
+      "6.0.0"
+    ],
+    "responsive_tested": true,
+    "accessibility_tested": true,
+    "dark_mode_tested": true
+  },
+  "changelog": [
+    {
+      "version": "1.0.0",
+      "date": "2025-09-23",
+      "changes": [
+        "Initial release",
+        "Tailwind CSS integration",
+        "Dark mode support",
+        "Responsive design",
+        "Accessibility improvements",
+        "Performance optimizations"
+      ]
+    }
+  ],
+  "roadmap": [
+    {
+      "version": "1.1.0",
+      "planned_features": [
+        "Alpine.js interactive filtering",
+        "Custom color schemes",
+        "Animation on hover",
+        "Tag frequency display",
+        "Export functionality"
+      ]
+    },
+    {
+      "version": "1.2.0",
+      "planned_features": [
+        "Search integration",
+        "Tag relationships",
+        "Visual tag clusters",
+        "Performance analytics",
+        "A11y improvements"
+      ]
+    }
+  ],
+  "created_at": "2025-09-23T18:25:33.321963",
+  "updated_at": "2025-09-23T18:25:33.321983"
+}

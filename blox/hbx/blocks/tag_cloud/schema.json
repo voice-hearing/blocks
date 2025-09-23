@@ -1,0 +1,402 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://hugoblox.com/schemas/blocks/tag_cloud.json",
+  "title": "HugoBlox Tag Cloud Block",
+  "description": "Schema for the HugoBlox Tag Cloud block configuration. Displays taxonomy terms with dynamic font sizing based on frequency.",
+  "type": "object",
+  "properties": {
+    "block": {
+      "type": "string",
+      "const": "tag_cloud",
+      "description": "Block type identifier"
+    },
+    "id": {
+      "type": "string",
+      "description": "Optional unique identifier for the block",
+      "pattern": "^[a-zA-Z][a-zA-Z0-9_-]*$"
+    },
+    "content": {
+      "type": "object",
+      "description": "Content configuration for the tag cloud",
+      "properties": {
+        "text": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "description": "Optional header text displayed above the tag cloud. Supports markdown formatting including headings, emphasis, and links.",
+          "examples": [
+            "Explore our topics",
+            "## Popular Tags\\nDiscover trending content",
+            "Browse by **category** to find relevant posts"
+          ]
+        },
+        "taxonomy": {
+          "type": "string",
+          "description": "Hugo taxonomy to display in the tag cloud",
+          "default": "tags",
+          "enum": [
+            "tags",
+            "categories",
+            "authors",
+            "series",
+            "topics",
+            "skills",
+            "technologies",
+            "research_areas",
+            "projects"
+          ],
+          "examples": [
+            "tags",
+            "categories",
+            "research_areas"
+          ]
+        },
+        "count": {
+          "type": "integer",
+          "description": "Maximum number of taxonomy terms to display. Set to 0 for unlimited.",
+          "default": 20,
+          "minimum": 0,
+          "maximum": 1000,
+          "examples": [
+            10,
+            20,
+            50,
+            0
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    "design": {
+      "type": "object",
+      "description": "Visual design configuration for the tag cloud",
+      "properties": {
+        "font_size_min": {
+          "type": "number",
+          "description": "Minimum font size in rem units for least frequent terms",
+          "default": 0.8,
+          "minimum": 0.5,
+          "maximum": 2.0,
+          "multipleOf": 0.1,
+          "examples": [
+            0.8,
+            0.9,
+            1.0
+          ]
+        },
+        "font_size_max": {
+          "type": "number",
+          "description": "Maximum font size in rem units for most frequent terms",
+          "default": 2.5,
+          "minimum": 1.0,
+          "maximum": 5.0,
+          "multipleOf": 0.1,
+          "examples": [
+            2.0,
+            2.5,
+            3.0
+          ]
+        },
+        "columns": {
+          "type": "string",
+          "description": "Layout configuration for the tag cloud display",
+          "default": "1",
+          "enum": [
+            "1",
+            "2"
+          ],
+          "examples": [
+            "1",
+            "2"
+          ],
+          "enumDescriptions": [
+            "Single column: centered layout with full width",
+            "Two columns: left-aligned layout with 2/3 width on large screens"
+          ]
+        },
+        "background": {
+          "type": "object",
+          "description": "Background styling options",
+          "properties": {
+            "color": {
+              "type": "string",
+              "description": "Background color (CSS color value)",
+              "pattern": "^(#[0-9A-Fa-f]{3,8}|rgb\\(|rgba\\(|hsl\\(|hsla\\(|[a-zA-Z]+).*$",
+              "examples": [
+                "#ffffff",
+                "rgb(255, 255, 255)",
+                "transparent",
+                "gray-50"
+              ]
+            },
+            "gradient_start": {
+              "type": "string",
+              "description": "Starting color for gradient background",
+              "pattern": "^(#[0-9A-Fa-f]{3,8}|rgb\\(|rgba\\(|hsl\\(|hsla\\(|[a-zA-Z]+).*$"
+            },
+            "gradient_end": {
+              "type": "string",
+              "description": "Ending color for gradient background",
+              "pattern": "^(#[0-9A-Fa-f]{3,8}|rgb\\(|rgba\\(|hsl\\(|hsla\\(|[a-zA-Z]+).*$"
+            },
+            "gradient_angle": {
+              "type": "integer",
+              "description": "Gradient angle in degrees",
+              "minimum": 0,
+              "maximum": 360,
+              "default": 135
+            }
+          },
+          "additionalProperties": false
+        },
+        "spacing": {
+          "type": "object",
+          "description": "Spacing and layout options",
+          "properties": {
+            "padding": {
+              "type": "string",
+              "description": "Tailwind CSS padding class",
+              "pattern": "^p(x|y|t|b|l|r)?-\\d+$",
+              "examples": [
+                "p-4",
+                "px-6",
+                "py-8"
+              ]
+            },
+            "margin": {
+              "type": "string",
+              "description": "Tailwind CSS margin class",
+              "pattern": "^m(x|y|t|b|l|r)?-\\d+$",
+              "examples": [
+                "m-4",
+                "mx-auto",
+                "my-8"
+              ]
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "advanced": {
+      "type": "object",
+      "description": "Advanced configuration options",
+      "properties": {
+        "custom_classes": {
+          "type": "string",
+          "description": "Additional CSS classes to apply to the tag cloud container",
+          "examples": [
+            "custom-tag-cloud",
+            "bordered rounded-lg"
+          ]
+        },
+        "sorting": {
+          "type": "string",
+          "description": "Sorting method for displaying tags",
+          "enum": [
+            "alphabetical",
+            "frequency",
+            "random"
+          ],
+          "default": "alphabetical",
+          "enumDescriptions": [
+            "Sort tags alphabetically by name",
+            "Sort tags by frequency (most used first)",
+            "Display tags in random order"
+          ]
+        },
+        "exclude_terms": {
+          "type": "array",
+          "description": "List of taxonomy terms to exclude from display",
+          "items": {
+            "type": "string"
+          },
+          "examples": [
+            [
+              "uncategorized",
+              "draft",
+              "private"
+            ]
+          ]
+        },
+        "min_count": {
+          "type": "integer",
+          "description": "Minimum number of posts required for a term to be displayed",
+          "minimum": 1,
+          "default": 1,
+          "examples": [
+            1,
+            2,
+            5
+          ]
+        },
+        "show_count": {
+          "type": "boolean",
+          "description": "Whether to display the number of posts for each term",
+          "default": false
+        },
+        "link_target": {
+          "type": "string",
+          "description": "Target attribute for tag links",
+          "enum": [
+            "_self",
+            "_blank",
+            "_parent",
+            "_top"
+          ],
+          "default": "_self"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "block"
+  ],
+  "additionalProperties": false,
+  "examples": [
+    {
+      "block": "tag_cloud",
+      "content": {
+        "text": "Explore our topics",
+        "taxonomy": "tags",
+        "count": 20
+      }
+    },
+    {
+      "block": "tag_cloud",
+      "content": {
+        "text": "## Popular Categories\\nBrowse content by topic",
+        "taxonomy": "categories",
+        "count": 15
+      },
+      "design": {
+        "font_size_min": 0.9,
+        "font_size_max": 2.2,
+        "columns": "2"
+      }
+    },
+    {
+      "block": "tag_cloud",
+      "id": "research-topics",
+      "content": {
+        "text": "### Research Areas\\n*Click to explore publications*",
+        "taxonomy": "research_areas",
+        "count": 0
+      },
+      "design": {
+        "font_size_min": 0.8,
+        "font_size_max": 3.0,
+        "columns": "1",
+        "background": {
+          "gradient_start": "#f3f4f6",
+          "gradient_end": "#e5e7eb",
+          "gradient_angle": 135
+        }
+      },
+      "advanced": {
+        "sorting": "frequency",
+        "min_count": 2,
+        "show_count": true
+      }
+    }
+  ],
+  "definitions": {
+    "taxonomy_types": {
+      "type": "string",
+      "description": "Standard Hugo taxonomy types",
+      "enum": [
+        "tags",
+        "categories",
+        "authors",
+        "series",
+        "topics",
+        "skills",
+        "technologies",
+        "research_areas",
+        "projects",
+        "locations",
+        "events",
+        "formats"
+      ]
+    },
+    "tailwind_spacing": {
+      "type": "string",
+      "description": "Valid Tailwind CSS spacing class",
+      "pattern": "^(p|m)(x|y|t|b|l|r)?-\\d+$"
+    },
+    "css_color": {
+      "type": "string",
+      "description": "Valid CSS color value",
+      "pattern": "^(#[0-9A-Fa-f]{3,8}|rgb\\(|rgba\\(|hsl\\(|hsla\\(|[a-zA-Z]+).*$"
+    }
+  },
+  "meta": {
+    "block_type": "tag_cloud",
+    "version": "1.0.0",
+    "schema_version": "2020-12",
+    "hugoblox_version": "5.9.0+",
+    "hugo_version": "0.119.0+",
+    "created": "2025-09-23T19:29:00Z",
+    "updated": "2025-09-23T19:29:00Z",
+    "author": "HugoBlox Community",
+    "license": "MIT",
+    "tags": [
+      "taxonomy",
+      "visualization",
+      "tailwind",
+      "responsive"
+    ],
+    "category": "content"
+  },
+  "validation": {
+    "font_size_relationship": {
+      "description": "font_size_max must be greater than font_size_min",
+      "rule": "design.font_size_max > design.font_size_min"
+    },
+    "count_validation": {
+      "description": "count must be 0 (unlimited) or positive integer",
+      "rule": "content.count >= 0"
+    },
+    "taxonomy_exists": {
+      "description": "taxonomy must exist in Hugo site configuration",
+      "rule": "content.taxonomy in site.taxonomies"
+    }
+  },
+  "ui_hints": {
+    "content.text": {
+      "widget": "textarea",
+      "placeholder": "Enter header text (markdown supported)",
+      "rows": 3
+    },
+    "content.taxonomy": {
+      "widget": "select",
+      "searchable": true,
+      "placeholder": "Select taxonomy type"
+    },
+    "content.count": {
+      "widget": "number",
+      "step": 1,
+      "placeholder": "0 for unlimited"
+    },
+    "design.font_size_min": {
+      "widget": "range",
+      "step": 0.1,
+      "unit": "rem"
+    },
+    "design.font_size_max": {
+      "widget": "range",
+      "step": 0.1,
+      "unit": "rem"
+    },
+    "design.columns": {
+      "widget": "radio",
+      "labels": {
+        "1": "Centered (full width)",
+        "2": "Left-aligned (2/3 width)"
+      }
+    }
+  }
+}
