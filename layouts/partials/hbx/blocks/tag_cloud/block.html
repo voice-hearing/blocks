@@ -23,8 +23,11 @@
 {{ $columns := $block.design.columns | default "1" }}
 
 <div class="max-w-4xl mx-auto {{ if eq $columns "2" }}lg:w-2/3{{ else }}text-center{{ end }}">
+  <div class="mb-6 text-3xl font-bold text-gray-900 dark:text-white">
+    {{ $block.content.title | markdownify | emojify }}
+  </div>
   {{ with $block.content.text }}
-    <div class="mb-6">{{ . | $page.RenderString | emojify }}</div>
+    <div class="mb-6"><p>{{ . | markdownify | emojify }}</p></div>
   {{ end }}
 
   {{ if ne $count 0 }}
